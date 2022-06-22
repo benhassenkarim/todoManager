@@ -1,0 +1,39 @@
+@RequestMapping(value="/login", method = RequestMethod.POST)
+	public String showWelcomePage(ModelMap model, @RequestParam String name, @RequestParam String password)
+	{ 
+	boolean isValideUser=Service.loginUser(name, password);
+	if(!isValideUser) {
+		model.put("message", "invadlid id or password");
+		return "login";}
+	model.put("name", name);
+	model.put("password", password);
+		return "welcome";
+	}
+	
+	
+	//login.jsp
+	<%@ include file="common/header.jspf"%>
+<%@ include file="common/navigation.jspf"%>
+<div class="container">
+	<font color="red">${errorMessage}</font>
+	<form method="post">
+		Name : <input type="text" name="name" />
+		Password : <input type="password" name="password" /> 
+		<input type="submit" />
+	</form>
+	</div>
+<%@ include file="common/footer.jspf"%>
+
+//
+package com.in28minute;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class LoginService {
+	public boolean loginUser(String userId, String userPass)
+	{
+		return userId.equalsIgnoreCase("in28Minutes")&&userPass.equalsIgnoreCase("1010");
+	}
+
+}
